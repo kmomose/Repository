@@ -1,0 +1,36 @@
+#!/bin/bash
+###
+###Post Script for provisioning harden Ubuntu OS
+### 
+###
+# touch dummy file to verify if this script work
+#
+#echo "touch dummy file /tmp/dummy"
+#echo "pwd"
+#echo "ls-l"
+touch /tmp/dummy
+###
+### Update apt
+### 
+apt-get update
+apt-get install iptables-persistent
+###
+### Set IPTABLE
+###
+iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
+iptables -A INPUT -s 119.81.0.0/15 -j ACCEPT
+iptables -A INPUT -s 174.133.0.0/15 -j ACCEPT
+iptables -A INPUT -s 161.202.0.0/15 -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
+service iptables start
+iptables-save > $HOME/firewall.txt
+#iptables-restor < $HOME/firewall.txt
+###
+### Install Tools
+###
+#apt-get update
