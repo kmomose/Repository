@@ -4,7 +4,7 @@
 ###
 ###    2015 Oct.10  K.Momose
 #####################################################
-yum update
+yum -y update
 if [ $? -ne 0 ]; then
         exit 1
 fi
