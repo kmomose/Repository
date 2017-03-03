@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #!/bin/sh
 ###
 ###   set up Docker in CentOS Server
@@ -23,3 +24,30 @@ fi
 service docker start
 chkconfig docker on
 exit0
+=======
+#!/bin/sh
+###
+###   set up Docker in CentOS Server
+###
+###    2015 Oct.10  K.Momose
+#####################################################
+yum update
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+#----------------
+# Install Docker
+#----------------
+curl -sSL https://get.docker.com | sh
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+#----------------------
+# Start Docker daemon
+#----------------------
+service docker start
+chkconfig docker on
+exit0
+>>>>>>> Stashed changes
